@@ -122,27 +122,27 @@ namespace R36_Linux_Partition_Sizer
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to my (very detailed) tutorial on how to install or Update ArkOS for the R36S and R36H, which (near the end of the tutorial) also includes a section about this program:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my (very detailed) tutorial on how to install or Update ArkOS for the R36S and R36H, which (near the end of the tutorial) also includes a section about this program:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/");
         }
 
         private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to the Official ArkOS page, wiki and downloads on GitHub:\nhttps://github.com/christianhaitian/arkos/wiki", "https://github.com/christianhaitian/arkos/wiki");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to the Official ArkOS page, wiki and downloads on GitHub:\nhttps://github.com/christianhaitian/arkos/wiki", "https://github.com/christianhaitian/arkos/wiki");
         }
 
         private void linkLabel6_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to the Community Maintained version of ArkOS for the R36S/R36H, maintained by AeolusUX:\nhttps://github.com/AeolusUX/ArkOS-R3XS", "https://github.com/AeolusUX/ArkOS-R3XS");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to the Community Maintained version of ArkOS for the R36S/R36H, maintained by AeolusUX:\nhttps://github.com/AeolusUX/ArkOS-R3XS", "https://github.com/AeolusUX/ArkOS-R3XS");
         }
 
         private void linkLabel7_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to my ArkOS Installation/Update tutorial but it will point directly to the DTB/'Display' Files section:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/#Step24dtbs", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/#Step24dtbs");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my ArkOS Installation/Update tutorial but it will point directly to the DTB/'Display' Files section:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/#Step24dtbs", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/#Step24dtbs");
         }
 
         private void linkLabel8_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to an excelent source of information when it comes to spotting fake/clone R36S units:\nhttps://handhelds.miraheze.org/wiki/R36S_Clones", "https://handhelds.miraheze.org/wiki/R36S_Clones");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to an excellent source of information when it comes to spotting fake/clone R36S units:\nhttps://handhelds.miraheze.org/wiki/R36S_Clones", "https://handhelds.miraheze.org/wiki/R36S_Clones");
         }
 
         private void OpenExternalLinkWithConfirm(string MessageText, string WebsiteURL)

@@ -6,13 +6,13 @@
 // done with Notepad++, I just wanted to make a small program for this to make it easier for my community to set a custom
 // Linux/ArkOS partition size.
 //
-// At the same time I wanted to take this oppertunity to make a small C# program with LOTS of comments in it so beginners
-// might learn a something from it on how I did things and why I did certain things.
+// At the same time I wanted to take this opportunity to make a small C# program with LOTS of comments in it so beginners
+// might learn something from it on how I did things and why I did certain things.
 //
 // For those who might be wondering why I'm using .NET Framework 4.7.2, firstly because it does the job which
 // it needs to do well enough ;), and secondly because I'm trying to keep my applications as compatible as much
 // with other operating systems, try to minimize runtime requirements AND because I want my applications to
-// be able to run on Microsoft Surfare RT tablets which have Windows RT 10 (ARM32) running on them when possible ;)
+// be able to run on Microsoft Surface RT tablets which have Windows RT 10 (ARM32) running on them when possible ;)
 //
 //---------------------------------------------------------------------------------------------------------
 // Website:   https://www.teamxnl.com/R36-Linux-Partition-Sizer
@@ -22,7 +22,7 @@
 //            the ability to 'take a look' what this application is doing. It CAN be used
 //            to learn from and use snippets to make (a different) program from them for yourself and
 //            also for public release, but it's not allowed to modify this program and then re-release
-//            it as an alternative version (more explained on why bellow)
+//            it as an alternative version (more explained on why below)
 //            for the full license please visit the website of this project/program (listed above)
 //---------------------------------------------------------------------------------------------------------
 //
@@ -38,7 +38,7 @@
 //    be dozens of variations of my program with just minor changes in the code and some slight graphical
 //    adjustments it would only clutter the internet with dozens of variations and cause confusion, or it
 //    will result in lots of repositories which are all at a different version, alternative version etc
-//    without being transparant about WHAT has changed or not compared to the orignal
+//    without being transparent about WHAT has changed or not compared to the original
 //    (which happens more than enough already these days in my opinion).
 //
 // Q: But what if I COMPLETELY re-do the UI, make sure there is no confusion with this version etc?
@@ -83,8 +83,8 @@ namespace R36_Linux_Partition_Sizer
         string FoundBootDriveLttr = "";             // Global variable which will be used to store the detected Boot Partition it's drive letter
         int TuxClicks = 0;                          // Used to count the amount of clicks on the Tux-SD-Card within the time limit set by the timer to enable 'pro-mode' (a "hidden" feature")
         bool UsedBackupScript = false;              // Used to set if we've used the initial value(s) of a detected present backup script or not (used when for example a user decided he/she wanted to edit the boot script again after saving)
-        bool BootedInIgnoreCompatilibily = false;   // Used to register if users have booted the application while holding down shift to ignore the R36 Only limitations, and thus taking the risk themselves that they might mess up their Linux Configuration
-        int DetectedPartitionCount = 0;             // Used to register the amount of found partitions on the same (physical) drive where we found the partition labled BOOT
+        bool BootedInIgnoreCompatibility = false;   // Used to register if users have booted the application while holding down shift to ignore the R36 Only limitations, and thus taking the risk themselves that they might mess up their Linux Configuration
+        int DetectedPartitionCount = 0;             // Used to register the amount of found partitions on the same (physical) drive where we found the partition labeled BOOT
 
         #endregion
 
@@ -109,7 +109,7 @@ namespace R36_Linux_Partition_Sizer
             // it will work for other boot-scripts.
             if (Control.ModifierKeys == Keys.Shift)
             {
-                BootedInIgnoreCompatilibily = true;
+                BootedInIgnoreCompatibility = true;
                 imgWarning.Visible = true;
                 tmrBlinkWarning.Start();
                 MessageBox.Show("You've started the XNL R36 Linux Partition Sizer in 'Ignore R36 Detection mode' by holding down shift during the application start!\n\nThis means that the XNL R36 Linux Partition Sizer will not particularly check for matching files which belong to the R36 image. However this program still needs certain files to be (almost) the same to be able to function properly! So even while you told it to ignore the R36 checks, it is still possible that the program does not work for your device and/or it's boot files!\n\nPROCEED AT YOUR OWN RISK!", "XNL R36 Linux Partition Sizer - Security Override!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -139,11 +139,11 @@ namespace R36_Linux_Partition_Sizer
                     // Might be a bit confusing for some, but here name is actually the drive letter, not the 'label'
                     string DriveLtr = drive.Name;
 
-                    // Remember the Boot Partition size (because we'll need to substract it from the maximum size later!)                    
+                    // Remember the Boot Partition size (because we'll need to subtract it from the maximum size later!)                    
                     BootDriveSize = drive.TotalSize;
 
                     // First we'll check if the dtb file we should expect for the R36S/R36H is present or not
-                    if (File.Exists($"{DriveLtr}rk3326-rg351mp-linux.dtb") || BootedInIgnoreCompatilibily == true)
+                    if (File.Exists($"{DriveLtr}rk3326-rg351mp-linux.dtb") || BootedInIgnoreCompatibility == true)
                     {
                         // Then we also want to make sure that both the files firstboot.sh and ext**** are present
                         // if this is the case, then this means that this card has not been inserted into the R36S/R36H yet
@@ -252,7 +252,7 @@ namespace R36_Linux_Partition_Sizer
             }
             else
             {
-                // Making sure that the SD-Card (it's total size) is atleast 32GB to ensure we do have enough 'headroom'
+                // Making sure that the SD-Card (it's total size) is at least 32GB to ensure we do have enough 'headroom'
                 // to alter the size and still (at least) have 5GB for roms (because we won't allow to turn the entire card into Linux with my tool)
                 if (DetectedDriveSize < 30089095168)
                 {
@@ -311,7 +311,7 @@ namespace R36_Linux_Partition_Sizer
             double SliderMax = (long)(MaxDriveSizeLimit - CurLinuxArkOSPartSize) / 1000000;
             tbSizeAdjuster.Maximum = (int)SliderMax;
 
-            // CURRENTLY not even neccesary, but here we'll check if the boot drive should
+            // CURRENTLY not even necessary, but here we'll check if the boot drive should
             // be labeled with MB or GB. (Although I don't suspect it will EVER needs to be GB, but just future proofing it)
             double BootPartSize = BootDriveSize / (BaseCalc * BaseCalc);
             if (BootPartSize >= BaseCalc)
@@ -326,7 +326,7 @@ namespace R36_Linux_Partition_Sizer
             // Show the current Minimal Linux/ArkOS partition size (and represent it on screen using the set calculation method base-10 or base-2)
             lblMinimalLinuxPartitionSize.Text = ((double)CurLinuxArkOSPartSize / (BaseCalc * BaseCalc * BaseCalc)).ToString("F2") + GBLabel;
 
-            // If the user choose to use base 10 configuration then we'll add a plus-minus infront of the detected size to indicate that it's
+            // If the user choose to use base 10 configuration then we'll add a plus-minus in front of the detected size to indicate that it's
             // not fully accurate due to the calculation methods used (conversions from long to integers etc)
             String PrefixDetectedSize = "";
             if (BaseCalc == 1000) { PrefixDetectedSize = "±"; }
@@ -365,8 +365,8 @@ namespace R36_Linux_Partition_Sizer
             // XNL R36 Linux Partition Sizer to make the Linux/ArkOS partition smaller than the size set by the ArkOS/Image
             // developer in that file.
 
-            // We'll use a 'try-catch' block, so we can easily catch any (unforseen) errors while retrieving the pre-set partition size
-            // from the script. Usually I would use more speciffic error handling, but considering everything needs to match and work
+            // We'll use a 'try-catch' block, so we can easily catch any (unforeseen) errors while retrieving the pre-set partition size
+            // from the script. Usually I would use more specific error handling, but considering everything needs to match and work
             // and otherwise I WANT to let this Application abort, we can just simply (and lazy) use a try-catch ;)
             try
             {
@@ -403,7 +403,7 @@ namespace R36_Linux_Partition_Sizer
                     string numberString = fileContent.Substring(startIndex, endIndex - startIndex).Trim();
 
 
-                    // Next we'll try to convert the found substring into an actual numberic value (a long)
+                    // Next we'll try to convert the found substring into an actual numeric value (a long)
                     // and if this fails we'll just return -1, which we are using as error code in this Application
                     if (long.TryParse(numberString, out long extractedValue))
                     {
@@ -424,7 +424,7 @@ namespace R36_Linux_Partition_Sizer
             }
             catch
             {
-                // If ANY unexpected error occured, we'll just return our default erorr code (-1)
+                // If ANY unexpected error occurred, we'll just return our default error code (-1)
                 return -1;
             }
         }
@@ -434,7 +434,7 @@ namespace R36_Linux_Partition_Sizer
             // This is a small and simple 'helper function' which quickly returns the estimated SD-Card size
             // in human readable format (32GB for example) when the function is passed the detected size in bytes.
             // Reason why I'm using quite a 'large range' to detect/guess the SD-Card size, is because I want to
-            // account for SD-Cards which report a different size than expected (even when takin base-10 / base-2 into account).
+            // account for SD-Cards which report a different size than expected (even when taking base-10 / base-2 into account).
 
             // NOTE: We DO NOT have to change the values here based on when the user selects base-10 or base-2, because these
             // calculations are done only once during the start of the application and for this 'estimation' raw-byte values are used
@@ -447,7 +447,7 @@ namespace R36_Linux_Partition_Sizer
             }
 
             // And the same basically happens for each following block with increasing steps
-            // Won't comment on all of them though, that's just not neccesary here ;)
+            // Won't comment on all of them though, that's just not necessary here ;)
             if (DetectedDriveSize >= 60000000000 && DetectedDriveSize < 120000000000)
             {
                 return "64GB";
@@ -499,14 +499,14 @@ namespace R36_Linux_Partition_Sizer
             // also released again and can for example be cleaned up by the garbage collector.
             using (Graphics GraphicsDraw = Graphics.FromImage(bitmap))
             {
-                // Enabling Anti-alisasing for smoother text drawing
+                // Enabling Anti-aliasing for smoother text drawing
                 GraphicsDraw.SmoothingMode = SmoothingMode.HighQuality;
 
                 // Create an object called DrawingFont, which we setup as a new font
                 Font DrawingFont = new Font("Arial", 23, FontStyle.Bold);
 
                 // Create an object called DrawingBrushColor which we will use to give our 'brush'
-                // which we will use to draw the text on the SD-card a custom color from RBG (Red, Green and Blue)
+                // which we will use to draw the text on the SD-card a custom color from RGB (Red, Green and Blue)
                 // The range for RGB here is: 0 to 255
                 Color DrawingBrushColor = Color.FromArgb(234, 212, 241);
 
@@ -516,8 +516,8 @@ namespace R36_Linux_Partition_Sizer
                     // Set the position of the 'brush' where it needs to start drawing
                     PointF position = new PointF(13, 29);
                     
-                    // Drawing the String onto the GrapgicsDraw object, where SDCardsize is the parameter we've passed into this
-                    // function when calling it, the DrawingFont is the font we've setup above, just like the DrawingBrush and
+                    // Drawing the String onto the GraphicsDraw object, where SDCardsize is the parameter we've passed into this
+                    // function, the DrawingFont is the font we've setup above, just like the DrawingBrush and
                     // the position where we want to start drawing the string (of text)
                     GraphicsDraw.DrawString(SDCardSize, DrawingFont, DrawingBrush, position);
                 }
@@ -532,9 +532,9 @@ namespace R36_Linux_Partition_Sizer
              //=========================================================================================================================
              // As those more proficient with WMI might have noticed here: I absolutely HATE working with it, always
              // struggle with that stuff and won't deny that either xD. This most likely (well IS) a mess, but hey, it works and
-             // does what it needs to do 😂. Whatever you do, don't use this part as a 'perfect example' because it's nowwhere
+             // does what it needs to do 😂. Whatever you do, don't use this part as a 'perfect example' because it's nowhere
              // near anything like that haha. Every time I did got it working as I wanted and then switched to another SD-Card, or
-             // card reader something else "broke" again. And yeah, that most definitly has to do with me and my everlasting struggle
+             // card reader something else "broke" again. And yeah, that most definitely has to do with me and my everlasting struggle
              // with WMI😂, but: I. DO. NOT. CARE. It works now🤷🏽‍
              // And YES, I have tried combining the queries, but I just s*ck at WMI queries 😂 and I kept breaking it
              //=========================================================================================================================
@@ -626,7 +626,7 @@ namespace R36_Linux_Partition_Sizer
             string endMarker = "/$maxSize))e-4\")";
 
             // This is a new inserted section of code which will basically clean up the back-up we've created
-            // of the init bootscript file. This backup would only be needed if for some reason the overwritten file
+            // of the initial bootscript file. This backup would only be needed if for some reason the overwritten file
             // doesn't work (anymore). BUT if this line of code inside the original is able to remove the back up, then
             // this also means that the overwritten file was able to run (and thus we don't need the backup either anymore)
             string insertText = "# Clean up the expandtoexfat back-up from XNL R36 Linux Partition Sizer\n" +
@@ -665,7 +665,7 @@ namespace R36_Linux_Partition_Sizer
                 if (DetectRemoveBackUpLine == -1)
                 {
                     // Here we'll look for a particular string, and if that line of code is found then we'll going to inject
-                    // another line of code (and a comment) aboce that line
+                    // another line of code (and a comment) above that line
                     int insertIndex = fileContent.IndexOf("if [ $exitcode -eq 0 ]; then");
                     if (insertIndex != -1)
                     {
@@ -776,7 +776,7 @@ namespace R36_Linux_Partition_Sizer
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            // Just a simple hard exit out of the XNL R36 Linux Parition Sizer
+            // Just a simple hard exit out of the XNL R36 Linux Partition Sizer
             Application.Exit();
         }
 
@@ -795,8 +795,8 @@ namespace R36_Linux_Partition_Sizer
                 return;
             }
 
-            // first I'm checkin if all the required files (to Match the R36S/R36H) are still present on the disk
-            if ((File.Exists($"{FoundBootDriveLttr}rk3326-rg351mp-linux.dtb") || BootedInIgnoreCompatilibily == true) && File.Exists($"{FoundBootDriveLttr}firstboot.sh") && File.Exists($"{FoundBootDriveLttr}expandtoexfat.sh"))
+            // first I'm checking if all the required files (to Match the R36S/R36H) are still present on the disk
+            if ((File.Exists($"{FoundBootDriveLttr}rk3326-rg351mp-linux.dtb") || BootedInIgnoreCompatibility == true) && File.Exists($"{FoundBootDriveLttr}firstboot.sh") && File.Exists($"{FoundBootDriveLttr}expandtoexfat.sh"))
             {
                 // Then I will once more load the partition size set by the developer of the ArkOS image which was used to flash the SD-Card
                 long CurLinuxArkOSPartSizeCheck = GetCurrentArkOSPartSize(FoundBootDriveLttr + "expandtoexfat.sh");
@@ -942,7 +942,7 @@ namespace R36_Linux_Partition_Sizer
                         // Setting the value so high that this block won't activate a second time at all anymore
                         TuxClicks = 100;
                         // Show the message that pro-mode has been enabled
-                        MessageBox.Show("'Pro-mode' Enabled!\n\nYou can now copy the bytes from the text field that appeared into the expandtoexfat.sh file yourself.\n\nWARNING: Do make sure you know what you are doing! and PLEASE make sure to read the help about editing that file if you want to make sure you won't mess it up!", "XNL R36 Linux Partition Sizer - Hidden Feature", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("'Pro-mode' Enabled!\n\nYou can now copy the bytes from the text field that appeared into the expandtoexfat.sh file to edit it yourself.\n\nWARNING: Do make sure you know what you are doing! and PLEASE make sure to read the help about editing that file if you want to make sure you won't mess it up!", "XNL R36 Linux Partition Sizer - Hidden Feature", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         // Showing the 'pro-mode' textbox and label (in a groupbox)
                         gbProMode.Visible = true;
                     }
@@ -950,7 +950,7 @@ namespace R36_Linux_Partition_Sizer
                 else
                 {
                     // If the amount of clicks on Tux are already registred to be more than 10 (100 due to our 'lock' above) then we'll show a message that Pro-mode is already active
-                    MessageBox.Show("'Pro-mode' has already been enabled.\n\nYou can now copy the bytes from the text field that appeared into the expandtoexfat.sh file yourself.\n\nWARNING: Do make sure you know what you are doing! and PLEASE make sure to read the help about editing that file if you want to make sure you won't mess it up!", "XNL R36 Linux Partition Sizer - Hidden Feature", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("'Pro-mode' has already been enabled.\n\nYou can now copy the bytes from the text field that appeared into the expandtoexfat.sh file to edit it yourself.\n\nWARNING: Do make sure you know what you are doing! and PLEASE make sure to read the help about editing that file if you want to make sure you won't mess it up!", "XNL R36 Linux Partition Sizer - Hidden Feature", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
@@ -962,8 +962,8 @@ namespace R36_Linux_Partition_Sizer
 
         private void imgRomsPartition_Click(object sender, EventArgs e)
         {
-            // Show a messagebox explaning what the "Games SD-Card Illustration" means
-            MessageBox.Show("This SD-Card represents the selected size of the ROM's partition (often labled EASYROMS) after you save the changes with the XNL R36 Linux Partition Sizer.\n\nWhen you increase the size of the Linux/ArkOS partition (to for example make/reserve more space for additional software, mods, drivers etc), you will basically 'sacrifice' the extra amount you are assigning to Linux/ArkOS from the ROM's partition.\n\nThe XNL Linux Partition Sizer has a hardcoded limit which prevents you shrinking the ROM's partition bellow 5GB. This to prevent possible compatibility issues with other applications, games, scripts etc.\n\nNOTE: This limit is set with base-2 (1GB = 1024MB).", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Show a messagebox explaining what the "Games SD-Card Illustration" means
+            MessageBox.Show("This SD-Card represents the selected size of the ROM's partition (often labeled EASYROMS) after you save the changes with the XNL R36 Linux Partition Sizer.\n\nWhen you increase the size of the Linux/ArkOS partition (to for example make/reserve more space for additional software, mods, drivers etc), you will basically 'sacrifice' the extra amount you are assigning to Linux/ArkOS from the ROM's partition.\n\nThe XNL Linux Partition Sizer has a hardcoded limit which prevents you shrinking the ROM's partition below 5GB. This to prevent possible compatibility issues with other applications, games, scripts etc.\n\nNOTE: This limit is set with base-2 (1GB = 1024MB).", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
@@ -975,8 +975,8 @@ namespace R36_Linux_Partition_Sizer
 
         private void label4_Click(object sender, EventArgs e)
         {
-            // Show a messagebox explaning the basic difference between base-10 and base-2
-            MessageBox.Show("There are basically two ways to calculate storage size: base-10 and base-2.\n\nStorage manufacturers use base-10 when telling you that you for example bought a 128GB SD-Card.\n\nOperating systems like Windows and Linux actually use base-2 to calculate storage sizes.\n\nBase-10 (Decimal System):\nIn base-10 1GB = 1000MB\n\nBase-2 (Binary System):\nIn base-2 1GB = 1024MB\nNOTE: The official label for base-2 GB's is actually GiB.\n\nWhich is also the reason why you would for example only see/'get' about 119.2GB in Windows for an SD-Card labled as 128GB.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Show a messagebox explaining the basic difference between base-10 and base-2
+            MessageBox.Show("There are basically two ways to calculate storage size: base-10 and base-2.\n\nStorage manufacturers use base-10 when telling you that you for example bought a 128GB SD-Card.\n\nOperating systems like Windows and Linux actually use base-2 to calculate storage sizes.\n\nBase-10 (Decimal System):\nIn base-10 1GB = 1000MB\n\nBase-2 (Binary System):\nIn base-2 1GB = 1024MB\nNOTE: The official label for base-2 GB's is actually GiB.\n\nWhich is also the reason why you would for example only see/'get' about 119.2GB in Windows for an SD-Card labeled as 128GB.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void imgWarning_Click(object sender, EventArgs e)
@@ -993,7 +993,7 @@ namespace R36_Linux_Partition_Sizer
         private void LlblYouTube1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Show a messagebox telling that this will open a link to my YouTube (Main Channel) and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to my main YouTube Channel:\nhttps://www.youtube.com/@XNLFutureTechnologies\n\nDo you want to continue to visit my Main YouTube Channel?", "https://www.youtube.com/@XNLFutureTechnologies");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my main YouTube Channel:\nhttps://www.youtube.com/@XNLFutureTechnologies\n\nDo you want to continue to visit my Main YouTube Channel?", "https://www.youtube.com/@XNLFutureTechnologies");
         }
 
         private void LlblYouTube2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1006,26 +1006,26 @@ namespace R36_Linux_Partition_Sizer
             else
             {
                 // Show a messagebox telling that this will open a link to my YouTube (Secondary channel) and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-                OpenExternalLinkWithConfirm("This is will open a (new) browser window to my Secondary YouTube Channel:\\nhttps://www.youtube.com/@XNLFutureTechnologies2\\n\\nDo you want to continue to visit my Secondary YouTube Channel?\", \"XNL R36 Linux Partition Sizer", "https://www.youtube.com/@XNLFutureTechnologies2");
+                OpenExternalLinkWithConfirm("This will open a (new) browser window to my Secondary YouTube Channel:\nhttps://www.youtube.com/@XNLFutureTechnologies2\n\nDo you want to continue to visit my Secondary YouTube Channel?", "https://www.youtube.com/@XNLFutureTechnologies2");
             }
         }
 
         private void LlblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Show a messagebox telling that this will open a link to the XNL R36 Linux Partition Sizer Website and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to the XNL R36 Linux Partition Sizer Website:\nhttps://www.teamxnl.com/R36-Linux-Partition-Sizer\n\nDo you want to continue to visit the XNL R36 Linux Partition Sizer Website?", "https://www.teamxnl.com/R36-Linux-Partition-Sizer");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to the XNL R36 Linux Partition Sizer Website:\nhttps://www.teamxnl.com/R36-Linux-Partition-Sizer\n\nDo you want to continue to visit the XNL R36 Linux Partition Sizer Website?", "https://www.teamxnl.com/R36-Linux-Partition-Sizer");
         }
 
         private void imgXNLFtLogo_Click(object sender, EventArgs e)
         {
             // Show a messagebox telling that this will open a link to my extended tutorial in regards to installing/updating ArkOS on the R36S/H  and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to my (very detailed) tutorial on how to install or Update ArkOS for the R36S and R36H, which (near the end of the tutorial) also includes a section about this program:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/\n\nDo you want to continue to visit my R36S/R36H ArkOS Installation or Update tutorial?", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my (very detailed) tutorial on how to install or Update ArkOS for the R36S and R36H, which (near the end of the tutorial) also includes a section about this program:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/\n\nDo you want to continue to visit my R36S/R36H ArkOS Installation or Update tutorial?", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/");
         }
 
         private void LlblR36Central_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Show a messagebox telling that this will open a link to the XNL R36S & R36H ArkOS Central Page and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-            OpenExternalLinkWithConfirm("This is will open a (new) browser window to my 'R36S & R36H ArkOS Central Page', this page basically contains all kinds of resources, information, links (both my own and external) and a collection of releases I've made for the R36S and R36H:\nhttps://www.teamxnl.com/r36s-r36h-arkos-central/\n\nDo you want to continue to visit the XNL R36S & R36H ArkOS Central Page?", "https://www.teamxnl.com/r36s-r36h-arkos-central/");
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my 'R36S & R36H ArkOS Central Page', this page basically contains all kinds of resources, information, links (both my own and external) and a collection of releases I've made for the R36S and R36H:\nhttps://www.teamxnl.com/r36s-r36h-arkos-central/\n\nDo you want to continue to visit the XNL R36S & R36H ArkOS Central Page?", "https://www.teamxnl.com/r36s-r36h-arkos-central/");
         }
 
         private void OpenExternalLinkWithConfirm(string MessageText, string WebsiteURL)
@@ -1095,7 +1095,7 @@ namespace R36_Linux_Partition_Sizer
             if (e.Shift)
                 isShiftPressed = true;
 
-            // If both keys (CRTL+Shift) are being held down, then we'll show a custom message (the "easter egg")
+            // If both keys (CTRL+Shift) are being held down, then we'll show a custom message (the "easter egg")
             if (isCtrlPressed && isShiftPressed)
             {
                 LlblYouTube2.Text = "PIGEONS ARE AWESOME!!";
