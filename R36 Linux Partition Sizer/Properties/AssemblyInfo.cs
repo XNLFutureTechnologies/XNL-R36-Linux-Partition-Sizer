@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("XNL Future Technologies")]
 [assembly: AssemblyProduct("XNL R36 Linux Partition Sizer")]
-[assembly: AssemblyCopyright("Copyright © 2025 XNL Future Technologies")]
+[assembly: AssemblyCopyright("Copyright © 2026 XNL Future Technologies")]
 [assembly: AssemblyTrademark("The XNL Future Technologies logo is a registred trademark of XNL Future Technologies®")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1")]
-[assembly: AssemblyFileVersion("1.0.1")]
+[assembly: AssemblyVersion("2.0.1")]
+[assembly: AssemblyFileVersion("2.0.1")]

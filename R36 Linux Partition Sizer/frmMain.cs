@@ -76,7 +76,7 @@ namespace R36_Linux_Partition_Sizer
 
         long MaxDriveSizeLimit = 0;                 // Global Variable which will be used to calculate and set the maximum allowed size (via the slider) for the Linux Partition
         long DetectedDriveSize = 0;                 // Global variable which will be used to store the detected total Drive size
-        long CurLinuxArkOSPartSize = 0;             // Global variable which will be used to store the minimal Linux/ArkOS partition size (retrieved from the initial boot files and set by the ArkOS Developer)
+        long CurLinuxArkOSPartSize = 0;             // Global variable which will be used to store the minimal Linux/ArkOS partition size (retrieved from the initial boot files and set by the (d)ArkOS Developer)
         long BootDriveSize = 0;                     // Global variable which will be used to store the boot partition size
         long ReservedRomPartition = 5368709120;     // Mandatory minimal size (5GB/GiB in Base-2! 1GB = 1024MB) for the ROMS Partition (to prevent possible issues with temp files, other apps/games etc)
         long BaseCalc = 1024;                       // The Application is by default configured to use Base-2 (1KB = 1024bytes, 1GB = 1024MB etc), but this can be changed with the radio buttons by the user
@@ -125,7 +125,7 @@ namespace R36_Linux_Partition_Sizer
 
             // First We'll loop through all USB drives which report as READY!
             // This needs to be done because (if everything is correct!) your SD-Card should have two partitions ("drives")
-            // which will report as ready/usable, and one which isn't because Windows can't recognize/read the Linux partition of ArkOS
+            // which will report as ready/usable, and one which isn't because Windows can't recognize/read the Linux partition of (d)ArkOS
             foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.Removable && d.IsReady))
             {
 
@@ -161,7 +161,7 @@ namespace R36_Linux_Partition_Sizer
                             // this is for example needed to prevent that the minimal size won't be locked to their manually set size
                             if (File.Exists($"{DriveLtr}expandtoexfat.xbck"))
                             {
-                                // Get the currently configured Linux Partition Size (from the backupped Initial Boot Scripts of ArkOS)
+                                // Get the currently configured Linux Partition Size (from the backupped Initial Boot Scripts of (d)ArkOS)
                                 CurLinuxArkOSPartSize = GetCurrentArkOSPartSize(FoundBootDriveLttr + "expandtoexfat.xbck");
                                 // Register that we are working with a value from the backup script instead of the 'main script'
                                 // otherwise safety checks during saving will fail!
@@ -173,7 +173,7 @@ namespace R36_Linux_Partition_Sizer
                             }
                             else
                             {
-                                // Get the currently configured Linux Partition Size (from the ORIGINAL Initial Boot Scripts of ArkOS)
+                                // Get the currently configured Linux Partition Size (from the ORIGINAL Initial Boot Scripts of (d)ArkOS)
                                 CurLinuxArkOSPartSize = GetCurrentArkOSPartSize(FoundBootDriveLttr + "expandtoexfat.sh");
                             }
 
@@ -204,7 +204,7 @@ namespace R36_Linux_Partition_Sizer
                                 if (CurLinuxArkOSPartSize == -2)
                                 {
                                     // Show a message box which will explain that we could 
-                                    MessageBox.Show("Sorry, can't continue!\n\nThere was an error while trying to parse the required Linux partition size from the expandtoexfat script.\n\nThis could either mean that your script is not compatible with this program (anymore), that you are trying to modify a bootdrive which this program isn't intended for, or that for example the ArkOS Developer(s) have changed the file so drastically that The XNL R36 Linux Partition Sizer now needs an update to be compatible (again).\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Sorry, can't continue!\n\nThere was an error while trying to parse the required Linux partition size from the expandtoexfat script.\n\nThis could either mean that your script is not compatible with this program (anymore), that you are trying to modify a bootdrive which this program isn't intended for, or that for example the (d)ArkOS Developer(s) have changed the file so drastically that The XNL R36 Linux Partition Sizer now needs an update to be compatible (again).\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     Application.Exit();
                                     return;
 
@@ -213,13 +213,13 @@ namespace R36_Linux_Partition_Sizer
                                 if (CurLinuxArkOSPartSize == -3)
                                 {
                                     // Show a message box which will explain that we could not detect the required data in the expandtoextfat script
-                                    MessageBox.Show("Sorry, can't continue!\n\nCould not detect the required data in the expandtoexfat script.\n\nThis could most likely mean that the ArkOS developer has changed the script and/or it's internal commands in such a way that the XNL R36 Linux Partition Sizer first requires an update before it is compatible again.\n\nIt COULD however also mean that you are trying to modify a boot drive which this application is not compatible with.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Sorry, can't continue!\n\nCould not detect the required data in the expandtoexfat script.\n\nThis could most likely mean that the (d)ArkOS developer has changed the script and/or it's internal commands in such a way that the XNL R36 Linux Partition Sizer first requires an update before it is compatible again.\n\nIt COULD however also mean that you are trying to modify a boot drive which this application is not compatible with.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     Application.Exit();
                                     return;
                                 }
 
                                 // Show a message box which will explain that we encountered an unknown error while trying to process the expandtoexfat script
-                                MessageBox.Show("Sorry, can't continue!\n\nAn unknown exception occured while trying to process the expandtoexfat script from the SD-Card.\n\nPlease remove the SD-Card, reinsert it and try again. If the problem persists, then you could also try to re-flash the ArkOS image to your SD-Card.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Sorry, can't continue!\n\nAn unknown exception occured while trying to process the expandtoexfat script from the SD-Card.\n\nPlease remove the SD-Card, reinsert it and try again. If the problem persists, then you could also try to re-flash the (d)ArkOS image to your SD-Card.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Application.Exit();
                                 return;
                             }
@@ -227,7 +227,7 @@ namespace R36_Linux_Partition_Sizer
                         else
                         {
                             // If we DID found the expected dtb file but we did NOT find the firstboot files, then this means
-                            // that this card has already been setup by the ArkOS and thus the partitioning already took place
+                            // that this card has already been setup by the (d)ArkOS and thus the partitioning already took place
                             // In this instance we will just outright refuse to modify the partitions, because we don't want to be
                             // the possible cause for data and/or savegame loss etc.
                             MessageBox.Show("Sorry, can't continue!\n\nWhile the correct drive and boot file(s) where detected for the R36S/R36H, it seems like it that this SD-Card has already been through the initial boot process!\n\nThe XNL R36 Linux Partition Sizer needs to be used DIRECTLY after you've flashed the image to the SD-Card, and BEFORE you insert it into the R36S/R36H for the first time.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -240,7 +240,7 @@ namespace R36_Linux_Partition_Sizer
             }
             if (CorrectBootDrivesFound < 1)
             {
-                MessageBox.Show("Could not detect a (suitable) R36S/R36H SD-Card and/or boot partition!\n\nTo use the XNL R36 Linux Partition Sizer you will need to run this program DIRECTLY after flashing the ArkOS image to the SD-Card and BEFORE inserting (and booting) it into the R36S/R36H for the first time.\nNote: If you are experiencing detection issues, you might try to remove the SD-Card from the computer, re-insert it and then try to run the XNL R36 Linux Partition Sizer again.\n\nIF you are trying to use this program for another device than the R36, then you can TRY to force it to continue anyway by holding shift while starting the program.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not detect a (suitable) R36S/R36H SD-Card and/or boot partition!\n\nTo use the XNL R36 Linux Partition Sizer you will need to run this program DIRECTLY after flashing the (d)ArkOS image to the SD-Card and BEFORE inserting (and booting) it into the R36S/R36H for the first time.\nNote: If you are experiencing detection issues, you might try to remove the SD-Card from the computer, re-insert it and then try to run the XNL R36 Linux Partition Sizer again.\n\nIF you are trying to use this program for another device than the R36, then you can TRY to force it to continue anyway by holding shift while starting the program.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
                 return;
             }
@@ -271,7 +271,7 @@ namespace R36_Linux_Partition_Sizer
                     // If we detected that we are using data from a backup script (indicating another round of editing)
                     if (UsedBackupScript)
                     {
-                        // And the "re-loaded" user set value is loaded correctly AND the loaded original ArkOS partition size (set by the image Developer) are correct
+                        // And the "re-loaded" user set value is loaded correctly AND the loaded original (d)ArkOS partition size (set by the image Developer) are correct
                         if (CurrentSetUserSize >= 0 && CurLinuxArkOSPartSize > 0)
                         {
                             // then we'll going to make sure that the slider (re-)loads at the correct position again.
@@ -281,7 +281,7 @@ namespace R36_Linux_Partition_Sizer
                         else
                         {
                             // If we detected a possible issue with the back up, then we won't allow re-editing of the file(s) either anymore!
-                            MessageBox.Show("Sorry, but it seems like it that something is going wrong!\n\nThe XNL R36 Linux Partition Sizer isn't able to properly (re-)load of your previous edit of this boot drive!\n\nYou could manually try to revert the back up by removing expandtoexfat.sh and renaming expandtoexfat.xbck to expandtoexfat.sh after that, but it might also be required to re-flash the ArkOS image to your SD-Card.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Sorry, but it seems like it that something is going wrong!\n\nThe XNL R36 Linux Partition Sizer isn't able to properly (re-)load of your previous edit of this boot drive!\n\nYou could manually try to revert the back up by removing expandtoexfat.sh and renaming expandtoexfat.xbck to expandtoexfat.sh after that, but it might also be required to re-flash the (d)ArkOS image to your SD-Card.\n\nThe XNL R36 Linux Partition Sizer will now exit.\n", "XNL R36 Linux Partition Resizer - Can't Continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Application.Exit();
                         }
                     }
@@ -359,10 +359,10 @@ namespace R36_Linux_Partition_Sizer
         static long GetCurrentArkOSPartSize(string filePath)
         {
             // This function is used to read the minimal set Linux/ArkOS partition size from the file
-            // expandtoexfat.sh on the BOOT Partition. This file is used during the inital boot of ArkOS
-            // after flashing the ArkOS Image to the SD-Card. The size read from this file is set by the developer
-            // of the ArkOS image that has been used to flash this SD-Card, and thus we will not allow the users of
-            // XNL R36 Linux Partition Sizer to make the Linux/ArkOS partition smaller than the size set by the ArkOS/Image
+            // expandtoexfat.sh on the BOOT Partition. This file is used during the inital boot of (d)ArkOS
+            // after flashing the (d)ArkOS Image to the SD-Card. The size read from this file is set by the developer
+            // of the (d)ArkOS image that has been used to flash this SD-Card, and thus we will not allow the users of
+            // XNL R36 Linux Partition Sizer to make the Linux/ArkOS partition smaller than the size set by the (d)ArkOS/Image
             // developer in that file.
 
             // We'll use a 'try-catch' block, so we can easily catch any (unforeseen) errors while retrieving the pre-set partition size
@@ -417,7 +417,7 @@ namespace R36_Linux_Partition_Sizer
                 else
                 {
                     // If we could not detect the correct startMarker or endMarker, then we'll return a 'custom error code' (-3) so that
-                    // we can inform the user that we suspect that this is either not a valid ArkOS initial boot file, or that the file for
+                    // we can inform the user that we suspect that this is either not a valid (d)ArkOS initial boot file, or that the file for
                     // example might have been updated/changed and that this Application is no longer compatible with this file.
                     return -3;
                 }
@@ -676,10 +676,30 @@ namespace R36_Linux_Partition_Sizer
                     }
                     else
                     {
-                        // If we didn't found that line of code we'll warn the user that he/she needs to clean-up the backup we've made him/herself after
-                        // the R36S/H has properly (and fully) booted. It does however not matter if the user would just leave that backup on the bootdrive
-                        // because it won't affect the system in anyway if they did.
-                        MessageBox.Show("Sorry, XNL R36 Linux Partition Sizer was unable to add the automatic clean-up lines to remove the expandtoexfat.xbck after the device has successfully booted into Linux/ArkOS.\n\nThis means that you will have to remove the expandtoexfat.xbck file yourself after your device has fully completed the partitioning.\n", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        // dArkOS compatibility 
+                        insertIndex = fileContent.IndexOf("if [ \"$exitcode\" == \"0\" ]; then");
+                        if (insertIndex != -1)
+                        {
+                            // Find the end of the line to insert on the next line
+                            int endOfLine = fileContent.IndexOf('\n', insertIndex);
+                            if (endOfLine != -1)
+                            {
+                                insertIndex = endOfLine + 1; // Insert after the newline
+                            }
+                            else
+                            {
+                                insertIndex += "if [ \"$exitcode\" == \"0\" ]; then".Length; // If no newline, insert after the string
+                            }
+                            // Here we'll try to find the area where we can safely insert our additional clean up code while at the same time making sure that it is actually being able to run.
+                            // // We can't append it all the way at the bottom of the original script, because in the final few lines the script actually removes itself, and then calls
+                            // // the function reboot. So the removal of our backup would never be reached if we would just appended it to the end of the file.
+                            fileContent = fileContent.Insert(insertIndex, insertText);
+                        }else{
+                            // If we didn't found that line of code we'll warn the user that he/she needs to clean-up the backup we've made him/herself after
+                            // the R36S/H has properly (and fully) booted. It does however not matter if the user would just leave that backup on the bootdrive
+                            // because it won't affect the system in anyway if they did.
+                            MessageBox.Show("Sorry, XNL R36 Linux Partition Sizer was unable to add the automatic clean-up lines to remove the expandtoexfat.xbck after the device has successfully booted into Linux/ArkOS.\n\nThis means that you will have to remove the expandtoexfat.xbck file yourself after your device has fully completed the partitioning.\n", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
                     }
                 }
 
@@ -788,8 +808,8 @@ namespace R36_Linux_Partition_Sizer
             // after the application has started and done it's safety checks, then you VERY WELL know what you are trying to do!)
 
 
-            // Ask the user if he/she is happy with the currently set configuration or not and if he/she wants to proceed to write the modifications to the initial bootfiles or ArkOS
-            if (MessageBox.Show($"You are about to configure the initial boot scripts of your ArkOS installation for the following sizes:\nBoot Partition: {lblBootPartSize.Text} (Fixed size)\nLinux/ArkOS Partition: {lblLinuxPartSize.Text}\nROM's Partition: {lblRomsPartSize.Text}\n\nAre you sure that this is the desired configuration?\n\nNOTE:\nModifying the initial boot scripts is of course at your own risk!\n\nA backup of the original boot script will be created at: {FoundBootDriveLttr}expandtoexfat.xbck", "XNL R36 Linux Partition Sizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+            // Ask the user if he/she is happy with the currently set configuration or not and if he/she wants to proceed to write the modifications to the initial bootfiles or (d)ArkOS
+            if (MessageBox.Show($"You are about to configure the initial boot scripts of your (d)ArkOS installation for the following sizes:\nBoot Partition: {lblBootPartSize.Text} (Fixed size)\nLinux/ArkOS Partition: {lblLinuxPartSize.Text}\nROM's Partition: {lblRomsPartSize.Text}\n\nAre you sure that this is the desired configuration?\n\nNOTE:\nModifying the initial boot scripts is of course at your own risk!\n\nA backup of the original boot script will be created at: {FoundBootDriveLttr}expandtoexfat.xbck", "XNL R36 Linux Partition Sizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
             {
                 // And if the user replied/clicked no, then we'll simply bail out and won't resume modifying any files
                 return;
@@ -798,7 +818,7 @@ namespace R36_Linux_Partition_Sizer
             // first I'm checking if all the required files (to Match the R36S/R36H) are still present on the disk
             if ((File.Exists($"{FoundBootDriveLttr}rk3326-rg351mp-linux.dtb") || BootedInIgnoreCompatibility == true) && File.Exists($"{FoundBootDriveLttr}firstboot.sh") && File.Exists($"{FoundBootDriveLttr}expandtoexfat.sh"))
             {
-                // Then I will once more load the partition size set by the developer of the ArkOS image which was used to flash the SD-Card
+                // Then I will once more load the partition size set by the developer of the (d)ArkOS image which was used to flash the SD-Card
                 long CurLinuxArkOSPartSizeCheck = GetCurrentArkOSPartSize(FoundBootDriveLttr + "expandtoexfat.sh");
 
                 // I will check if the SD-Card still has the same size as when the application was started
@@ -807,7 +827,7 @@ namespace R36_Linux_Partition_Sizer
                 // When it turns out that physical the SD-Card size "magically changed" ;)
                 if (DetectedDriveSizeCheck != DetectedDriveSize)
                 {
-                    MessageBox.Show("The SD-Card size does not seem to match with the size of the SD-Card which was detected upon starting the XNL R36 Linux Partition Sizer!\n\nI don't know what you are trying to do, but this program is ONLY intended to be used with ArkOS for use on the R36S/R36H for a reason.\n\nIf you just wanted to do another SD-Card for a different R36S/R36H then please just restart the XNL R36 Linux Partition Sizer to start over with a fresh set of data.\n\nSave opperation canceled.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The SD-Card size does not seem to match with the size of the SD-Card which was detected upon starting the XNL R36 Linux Partition Sizer!\n\nI don't know what you are trying to do, but this program is ONLY intended to be used with (d)ArkOS for use on the R36S/R36H for a reason.\n\nIf you just wanted to do another SD-Card for a different R36S/R36H then please just restart the XNL R36 Linux Partition Sizer to start over with a fresh set of data.\n\nSave opperation canceled.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -815,7 +835,7 @@ namespace R36_Linux_Partition_Sizer
                 // BUT, if the application has been started while we loaded the data (partially) from a backup already created by this program, then we'll ignore this check
                 if (CurLinuxArkOSPartSizeCheck != CurLinuxArkOSPartSize && UsedBackupScript == false)
                 {
-                    MessageBox.Show("The data in the initial boot scripts for ArkOS doen't seem to match with the data which was detected upon starting the XNL R36 Linux Partition Sizer!\n\nI don't know what you are trying to do, but this program is ONLY intended to be used with ArkOS for use on the R36S/R36H for a reason.\n\nIf you just wanted to do another SD-Card for a different R36S/R36H then please just restart the XNL R36 Linux Partition Sizer to start over with a fresh set of data.\n\nSave opperation canceled.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The data in the initial boot scripts for (d)ArkOS doen't seem to match with the data which was detected upon starting the XNL R36 Linux Partition Sizer!\n\nI don't know what you are trying to do, but this program is ONLY intended to be used with (d)ArkOS for use on the R36S/R36H for a reason.\n\nIf you just wanted to do another SD-Card for a different R36S/R36H then please just restart the XNL R36 Linux Partition Sizer to start over with a fresh set of data.\n\nSave opperation canceled.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -843,7 +863,7 @@ namespace R36_Linux_Partition_Sizer
                     {
                         // We'll store the size with which we've increased the Linux partition to a file on the boot drive,
                         // this can then be used by my other programs running on the R36 like the XNL Package Manager for example to determine IF
-                        // it would be 'safe' to install very large packages without 'stealing' reserved storage space from future updates of ArkOS
+                        // it would be 'safe' to install very large packages without 'stealing' reserved storage space from future updates of (d)ArkOS
                         long AddedSize = (long)tbSizeAdjuster.Value * 1000000;
                         File.WriteAllText($"{FoundBootDriveLttr}.xnlft-linpatext", $"{AddedSize}\n", new System.Text.UTF8Encoding(false));
                     }
@@ -855,7 +875,7 @@ namespace R36_Linux_Partition_Sizer
                         // to install (but nothing the user will notice)
                     }
 
-                    MessageBox.Show("The Initial Boot Files for your ArkOS installation have successfully been updated.\n\nYou can now remove the SD-Card from your computer, insert it into your R36S/R36H and ArkOS will do the rest for you (re-sizing the partitions) upon it's first boot.\n\nThe XNL R36 Linux Partition Sizer will now exit.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("The Initial Boot Files for your (d)ArkOS installation have successfully been updated.\n\nYou can now remove the SD-Card from your computer, insert it into your R36S/R36H and (d)ArkOS will do the rest for you (re-sizing the partitions) upon it's first boot.\n\nThe XNL R36 Linux Partition Sizer will now exit.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Euhm... yeah.... ;)
                     Application.Exit();
@@ -863,13 +883,13 @@ namespace R36_Linux_Partition_Sizer
                 else
                 {
                     // Upon failure when trying to save we'll give an error message
-                    MessageBox.Show("An unknown error occured while trying to update the inital partition creation bootscript!\n\nPlease proceed with caution or manually restore the created backup expandtoexfat.xbck by renaming it back to expandtoexfat.sh\n\nIt might also be needed to just re-flash the entire ArkOS image to your SD-Card (worse-case-scenario though).", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("An unknown error occured while trying to update the inital partition creation bootscript!\n\nPlease proceed with caution or manually restore the created backup expandtoexfat.xbck by renaming it back to expandtoexfat.sh\n\nIt might also be needed to just re-flash the entire (d)ArkOS image to your SD-Card (worse-case-scenario though).", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
                 // If we don't detect the boot files anymore (could be SD-Card fail, removed SD-Card, swapped SD-card etc), we will give an error
-                MessageBox.Show("For some reason the expected bootfiles for the R36S/R36H are no longer being detected as present on the SD-Card!\n\nI don't know what you are trying to do, but this program is ONLY intended to be used with ArkOS for use on the R36S/R36H for a reason.\n\nIf you just wanted to do another SD-Card for a different R36S/R36H then please just restart the XNL R36 Linux Partition Sizer to start over with a fresh set of data.\n\nSave opperation canceled.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("For some reason the expected bootfiles for the R36S/R36H are no longer being detected as present on the SD-Card!\n\nI don't know what you are trying to do, but this program is ONLY intended to be used with (d)ArkOS for use on the R36S/R36H for a reason.\n\nIf you just wanted to do another SD-Card for a different R36S/R36H then please just restart the XNL R36 Linux Partition Sizer to start over with a fresh set of data.\n\nSave opperation canceled.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
 
             }
@@ -882,7 +902,7 @@ namespace R36_Linux_Partition_Sizer
         private void lblCardSize_Click(object sender, EventArgs e)
         {
             // Showing a messagebox with information about the detected card size and why it might appear smaller than what is printed on the SD-Card/Packaging
-            MessageBox.Show("This is the detected total size of the ArkOS SD-Card you've flashed the image to.\n\nNOTE: It is normal if the drive shows less space than the card is advertised with (for example showing 31GB for a 32GB Card).\n\nThis simply put has to do with filesystem overhead and other technical things ;) (or the calculation method you've selected bellow).\n\nIf you noticed that the sizes don't add up perfectly (especially when using base-10), then please read the help to understand why.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("This is the detected total size of the (d)ArkOS SD-Card you've flashed the image to.\n\nNOTE: It is normal if the drive shows less space than the card is advertised with (for example showing 31GB for a 32GB Card).\n\nThis simply put has to do with filesystem overhead and other technical things ;) (or the calculation method you've selected bellow).\n\nIf you noticed that the sizes don't add up perfectly (especially when using base-10), then please read the help to understand why.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void lblNewSize_Click(object sender, EventArgs e)
@@ -894,7 +914,7 @@ namespace R36_Linux_Partition_Sizer
         private void lblDriveLttr_Click(object sender, EventArgs e)
         {
             // Showing a messagebox explaining that this is the detected drive letter and asking if they would like to open this drive in File Explorer
-            if (MessageBox.Show("This is the detected drive letter of your ArkOS Boot Partition.\n\nWould you like to open this drive in Windows File Explorer to view the contents?", "XNL R36 Linux Partition Sizer", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show("This is the detected drive letter of your (d)ArkOS Boot Partition.\n\nWould you like to open this drive in Windows File Explorer to view the contents?", "XNL R36 Linux Partition Sizer", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 Process.Start("explorer.exe", $"{lblDriveLttr.Text}");
             }
@@ -956,7 +976,7 @@ namespace R36_Linux_Partition_Sizer
             else
             {
                 // And if Tux is being clicked without control and shift are being held down, then we'll show a messagebox explaning what the "Tux Partition/SD-Card represents
-                MessageBox.Show("This SD-Card represents the selected size of the Linux/ArkOS Partition of your SD-Card after you save the changes with the XNL R36 Linux Partition Sizer.\n\nThe minimum allowed size for this partition has been set by the developer of the ArkOS image you've used to flash this SD-Card.\n\nTIP: Click on help at the top right if you want some general tips/recommendations about the size options for your Linux partition.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("This SD-Card represents the selected size of the Linux/ArkOS Partition of your SD-Card after you save the changes with the XNL R36 Linux Partition Sizer.\n\nThe minimum allowed size for this partition has been set by the developer of the (d)ArkOS image you've used to flash this SD-Card.\n\nTIP: Click on help at the top right if you want some general tips/recommendations about the size options for your Linux partition.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -970,7 +990,7 @@ namespace R36_Linux_Partition_Sizer
         private void lblMinimalLinuxPartitionSize_Click(object sender, EventArgs e)
         {
             // Show a messagebox explaning what the minimal Linux Partition size means and where it comes from
-            MessageBox.Show("This is the minimal size the Linux/ArkOS partition needs to be.\n\nThis size has been set by the developer of the ArkOS Image you've used to flash your SD-Card with.\n\nYou are not be able make the Linux partition smaller than this value.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("This is the minimal size the Linux/ArkOS partition needs to be.\n\nThis size has been set by the developer of the (d)ArkOS Image you've used to flash your SD-Card with.\n\nYou are not be able make the Linux partition smaller than this value.", "XNL R36 Linux Partition Sizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -1018,14 +1038,14 @@ namespace R36_Linux_Partition_Sizer
 
         private void imgXNLFtLogo_Click(object sender, EventArgs e)
         {
-            // Show a messagebox telling that this will open a link to my extended tutorial in regards to installing/updating ArkOS on the R36S/H  and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-            OpenExternalLinkWithConfirm("This will open a (new) browser window to my (very detailed) tutorial on how to install or Update ArkOS for the R36S and R36H, which (near the end of the tutorial) also includes a section about this program:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/\n\nDo you want to continue to visit my R36S/R36H ArkOS Installation or Update tutorial?", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/");
+            // Show a messagebox telling that this will open a link to my extended tutorial in regards to installing/updating (d)ArkOS on the R36S/H  and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my (very detailed) tutorial on how to install or Update (d)ArkOS for the R36S and R36H, which (near the end of the tutorial) also includes a section about this program:\nhttps://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/\n\nDo you want to continue to visit my R36S/R36H (d)ArkOS Installation or Update tutorial?", "https://www.teamxnl.com/installing-or-updating-arkos-r36s-r36h/");
         }
 
         private void LlblR36Central_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Show a messagebox telling that this will open a link to the XNL R36S & R36H ArkOS Central Page and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
-            OpenExternalLinkWithConfirm("This will open a (new) browser window to my 'R36S & R36H ArkOS Central Page', this page basically contains all kinds of resources, information, links (both my own and external) and a collection of releases I've made for the R36S and R36H:\nhttps://www.teamxnl.com/r36s-r36h-arkos-central/\n\nDo you want to continue to visit the XNL R36S & R36H ArkOS Central Page?", "https://www.teamxnl.com/r36s-r36h-arkos-central/");
+            // Show a messagebox telling that this will open a link to the XNL R36S & R36H (d)ArkOS Central Page and then asking confirmation IF the user wants to open the link or not (I don't like to just instantly open links to pages for other people!)
+            OpenExternalLinkWithConfirm("This will open a (new) browser window to my 'R36S & R36H (d)ArkOS Central Page', this page basically contains all kinds of resources, information, links (both my own and external) and a collection of releases I've made for the R36S and R36H:\nhttps://www.teamxnl.com/r36s-r36h-arkos-central/\n\nDo you want to continue to visit the XNL R36S & R36H (d)ArkOS Central Page?", "https://www.teamxnl.com/r36s-r36h-arkos-central/");
         }
 
         private void OpenExternalLinkWithConfirm(string MessageText, string WebsiteURL)
